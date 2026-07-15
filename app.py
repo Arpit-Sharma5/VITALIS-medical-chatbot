@@ -63,6 +63,11 @@ def index():
     return render_template('chat.html')
 
 
+@app.route("/health")
+def health():
+    return jsonify({"status": "healthy"})
+
+
 
 @app.route("/get", methods=["GET", "POST"])
 def chat():
@@ -76,4 +81,4 @@ def chat():
 
 
 if __name__ == '__main__':
-    app.run(host="0.0.0.0", port= 8080, debug= True)
+    app.run(host="0.0.0.0", port=int(os.environ.get("PORT", "8080")), debug=False)
