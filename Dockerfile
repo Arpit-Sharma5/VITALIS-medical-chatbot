@@ -13,7 +13,8 @@ RUN apt-get update \
 COPY requirements.txt setup.py ./
 COPY src ./src
 
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir --index-url https://download.pytorch.org/whl/cpu torch==2.13.0 \
+    && pip install --no-cache-dir -r requirements.txt
 
 # Cache the query-embedding model in the image so production starts reliably
 # without downloading model files on every new instance.
