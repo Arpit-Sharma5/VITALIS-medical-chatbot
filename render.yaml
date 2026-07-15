@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: vitalis-medical-chatbot
+    runtime: docker
+    plan: free
+    region: virginia
+    branch: main
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /health
+    autoDeployTrigger: commit
+    envVars:
+      - key: PINECONE_API_KEY
+        sync: false
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: GEMINI_MODEL
+        value: gemini-2.5-flash
