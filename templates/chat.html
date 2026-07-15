@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="theme-color" content="#061923">
+    <meta name="description" content="A calm, reference-informed medical chatbot for clear health education.">
+    <title>Medical Chatbot · Vitalis</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+    <a class="skip-link" href="#text">Skip to your question</a>
+
+    <div class="ambient-stage" aria-hidden="true">
+        <video id="ambientVideo" class="ambient-video" autoplay muted loop playsinline preload="auto">
+            <source src="{{ url_for('static', filename='media/medical-dna-background.mp4') }}" type="video/mp4">
+        </video>
+        <div class="video-grade"></div>
+        <div class="ambient-bloom ambient-bloom--red"></div>
+        <div class="ambient-bloom ambient-bloom--blue"></div>
+        <div class="molecular-field">
+            <span></span><span></span><span></span><span></span><span></span><span></span>
+        </div>
+        <div class="fine-grain"></div>
+    </div>
+
+    <main class="experience-shell">
+        <header class="topbar">
+            <div class="brand-lockup" aria-label="Vitalis medical intelligence">
+                <span class="welcome-emblem welcome-emblem--brand" aria-hidden="true">
+                    <span class="emblem-cross">+</span>
+                    <span class="emblem-ring emblem-ring--one"></span>
+                    <span class="emblem-ring emblem-ring--two"></span>
+                    <i class="emblem-node emblem-node--one"></i>
+                    <i class="emblem-node emblem-node--two"></i>
+                </span>
+                <span class="brand-copy">
+                    <strong>VITALIS</strong>
+                    <small>Medical intelligence</small>
+                </span>
+            </div>
+
+            <div class="topbar-tools">
+                <button class="motion-toggle" id="motionToggle" type="button" aria-label="Pause background motion">
+                    <span class="motion-icon" aria-hidden="true">Ⅱ</span>
+                    <span class="motion-label">Pause motion</span>
+                </button>
+            </div>
+        </header>
+
+        <section class="hero-grid">
+            <aside class="intro-panel" aria-labelledby="introTitle">
+                <div class="intro-content">
+                    <p class="eyebrow"><span></span> Medical knowledge, made clear</p>
+                    <h1 id="introTitle">Understand your health with more <em>clarity.</em></h1>
+                    <p class="intro-lead">Explore trusted medical reference material through calm, concise conversation—designed to make complex topics easier to understand.</p>
+
+                    <div class="safety-card">
+                        <span class="safety-symbol" aria-hidden="true">+</span>
+                        <p><strong>For education, not diagnosis.</strong> If you may be experiencing an emergency, contact local emergency services immediately.</p>
+                    </div>
+                </div>
+            </aside>
+
+            <section class="chat-shell" aria-label="Medical chatbot conversation">
+                <div class="panel-scan" aria-hidden="true"></div>
+
+                <header class="chat-header">
+                    <div class="assistant-identity">
+                        <div>
+                            <div class="assistant-title-line">
+                                <h2>Medical Chatbot</h2>
+                                <span class="clinical-badge">AI</span>
+                            </div>
+                            <p><span class="mini-wave" aria-hidden="true"><i></i><i></i><i></i><i></i></span> Clinical reference assistant</p>
+                        </div>
+                    </div>
+
+                    <button class="new-chat-button" id="newChatButton" type="button" aria-label="Start a new conversation">
+                        <span aria-hidden="true">↻</span>
+                        <span>New chat</span>
+                    </button>
+                </header>
+
+                <div class="conversation-frame">
+                    <div id="messageFormeight" class="messages" role="log" aria-live="polite" aria-relevant="additions" aria-busy="false">
+                        <section class="welcome-state" id="welcomeState" aria-labelledby="welcomeTitle">
+                            <div class="welcome-emblem" aria-hidden="true">
+                                <span class="emblem-cross">+</span>
+                                <span class="emblem-ring emblem-ring--one"></span>
+                                <span class="emblem-ring emblem-ring--two"></span>
+                                <i class="emblem-node emblem-node--one"></i>
+                                <i class="emblem-node emblem-node--two"></i>
+                            </div>
+                            <p class="welcome-kicker">Your health reference companion</p>
+                            <h3 id="welcomeTitle">What would you like to understand?</h3>
+                            <p class="welcome-copy">Ask about a condition, symptom, treatment, or medical term. I’ll keep the answer focused and easy to follow.</p>
+
+                            <div class="suggestion-grid" aria-label="Suggested questions">
+                                <button class="suggestion-card" type="button" data-prompt="What is acne and what commonly causes it?">
+                                    <span class="suggestion-icon" aria-hidden="true">01</span>
+                                    <span class="suggestion-text">
+                                        <small>Understand a condition</small>
+                                        <strong>What is acne?</strong>
+                                    </span>
+                                    <span class="suggestion-arrow" aria-hidden="true">↗</span>
+                                </button>
+                                <button class="suggestion-card" type="button" data-prompt="What is diabetes and how does it affect the body?">
+                                    <span class="suggestion-icon" aria-hidden="true">02</span>
+                                    <span class="suggestion-text">
+                                        <small>Explore a health topic</small>
+                                        <strong>Explain diabetes</strong>
+                                    </span>
+                                    <span class="suggestion-arrow" aria-hidden="true">↗</span>
+                                </button>
+                                <button class="suggestion-card" type="button" data-prompt="What is a migraine and what symptoms are commonly associated with it?">
+                                    <span class="suggestion-icon" aria-hidden="true">03</span>
+                                    <span class="suggestion-text">
+                                        <small>Decode a medical term</small>
+                                        <strong>Understanding migraine</strong>
+                                    </span>
+                                    <span class="suggestion-arrow" aria-hidden="true">↗</span>
+                                </button>
+                            </div>
+                        </section>
+
+                        <div class="typing-row" id="typingIndicator" hidden aria-label="Medical Chatbot is preparing an answer">
+                            <span class="message-avatar message-avatar--assistant" aria-hidden="true">+</span>
+                            <div class="typing-bubble">
+                                <span class="typing-copy">Reviewing the medical reference</span>
+                                <span class="typing-nodes" aria-hidden="true"><i></i><i></i><i></i></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <footer class="composer-area">
+                    <form id="messageArea" class="composer" autocomplete="off">
+                        <span class="composer-spark" aria-hidden="true">✦</span>
+                        <label class="sr-only" for="text">Ask a medical question</label>
+                        <textarea id="text" name="msg" rows="1" maxlength="800" placeholder="Ask a medical question…" required></textarea>
+                        <button type="submit" id="send" class="send-button" aria-label="Send medical question">
+                            <span class="send-label">Ask</span>
+                            <span class="send-arrow" aria-hidden="true">→</span>
+                            <span class="send-loader" aria-hidden="true"></span>
+                        </button>
+                    </form>
+                    <div class="composer-meta">
+                        <span><i aria-hidden="true"></i> General medical guidance only</span>
+                        <span id="characterCount" aria-live="off">0 / 800</span>
+                    </div>
+                </footer>
+            </section>
+        </section>
+
+        <footer class="page-footer">
+            <span>Vitalis · Medical knowledge interface</span>
+            <span>Always consult a qualified healthcare professional for personal medical advice.</span>
+        </footer>
+    </main>
+
+    <script>
+        (() => {
+            const form = document.getElementById("messageArea");
+            const input = document.getElementById("text");
+            const sendButton = document.getElementById("send");
+            const messages = document.getElementById("messageFormeight");
+            const welcomeState = document.getElementById("welcomeState");
+            const typingIndicator = document.getElementById("typingIndicator");
+            const newChatButton = document.getElementById("newChatButton");
+            const characterCount = document.getElementById("characterCount");
+            const video = document.getElementById("ambientVideo");
+            const motionToggle = document.getElementById("motionToggle");
+            const motionIcon = motionToggle.querySelector(".motion-icon");
+            const motionLabel = motionToggle.querySelector(".motion-label");
+            const suggestionButtons = [...document.querySelectorAll(".suggestion-card")];
+            const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+            const formatTime = () => new Intl.DateTimeFormat([], {
+                hour: "2-digit",
+                minute: "2-digit"
+            }).format(new Date());
+
+            const scrollToLatest = (behavior = "smooth") => {
+                messages.scrollTo({ top: messages.scrollHeight, behavior });
+            };
+
+            const resizeComposer = () => {
+                input.style.height = "auto";
+                input.style.height = `${Math.min(input.scrollHeight, 120)}px`;
+                characterCount.textContent = `${input.value.length} / 800`;
+            };
+
+            const makeMessage = (role, text, isError = false) => {
+                const row = document.createElement("article");
+                row.className = `message message--${role}${isError ? " message--error" : ""}`;
+
+                const avatar = document.createElement("span");
+                avatar.className = `message-avatar message-avatar--${role}`;
+                avatar.setAttribute("aria-hidden", "true");
+                avatar.textContent = role === "assistant" ? "+" : "YOU";
+
+                const content = document.createElement("div");
+                content.className = "message-content";
+
+                const meta = document.createElement("div");
+                meta.className = "message-meta";
+
+                const author = document.createElement("strong");
+                author.textContent = role === "assistant" ? "Medical Chatbot" : "You";
+
+                const time = document.createElement("time");
+                time.textContent = formatTime();
+
+                const bubble = document.createElement("div");
+                bubble.className = "message-bubble";
+
+                const paragraph = document.createElement("p");
+                paragraph.textContent = text;
+
+                meta.append(author, time);
+                bubble.appendChild(paragraph);
+                content.append(meta, bubble);
+                row.append(avatar, content);
+                messages.insertBefore(row, typingIndicator);
+                scrollToLatest();
+                return { row, bubble, paragraph };
+            };
+
+            const revealAssistantMessage = (text) => {
+                const message = makeMessage("assistant", reduceMotion.matches ? text : "");
+                if (reduceMotion.matches) return Promise.resolve();
+
+                const { row, bubble, paragraph } = message;
+                const characters = Array.from(text);
+                const chunkSize = characters.length > 700 ? 6 : characters.length > 350 ? 4 : 3;
+                const textNode = document.createTextNode("");
+                const cursor = document.createElement("span");
+
+                row.classList.add("message--typing");
+                row.setAttribute("aria-busy", "true");
+                paragraph.setAttribute("aria-hidden", "true");
+                paragraph.appendChild(textNode);
+                cursor.className = "stream-cursor";
+                cursor.setAttribute("aria-hidden", "true");
+                bubble.appendChild(cursor);
+
+                return new Promise((resolve) => {
+                    let index = 0;
+                    let pauseUntil = 0;
+
+                    const typeFrame = (timestamp) => {
+                        if (timestamp < pauseUntil) {
+                            requestAnimationFrame(typeFrame);
+                            return;
+                        }
+
+                        const nextIndex = Math.min(index + chunkSize, characters.length);
+                        const nextChunk = characters.slice(index, nextIndex).join("");
+                        textNode.appendData(nextChunk);
+                        index = nextIndex;
+                        messages.scrollTop = messages.scrollHeight;
+
+                        if (index >= characters.length) {
+                            cursor.remove();
+                            paragraph.removeAttribute("aria-hidden");
+                            row.classList.remove("message--typing");
+                            row.setAttribute("aria-busy", "false");
+                            resolve();
+                            return;
+                        }
+
+                        const lastTypedCharacter = nextChunk.trimEnd().slice(-1);
+                        if (/[.!?]/.test(lastTypedCharacter)) {
+                            pauseUntil = timestamp + 90;
+                        } else if (/[,;:]/.test(lastTypedCharacter)) {
+                            pauseUntil = timestamp + 35;
+                        }
+
+                        requestAnimationFrame(typeFrame);
+                    };
+
+                    requestAnimationFrame(typeFrame);
+                });
+            };
+
+            const setBusy = (busy) => {
+                messages.setAttribute("aria-busy", String(busy));
+                input.disabled = busy;
+                sendButton.disabled = busy;
+                newChatButton.disabled = busy;
+                sendButton.classList.toggle("is-loading", busy);
+                suggestionButtons.forEach((button) => { button.disabled = busy; });
+                typingIndicator.hidden = !busy;
+                if (busy) scrollToLatest();
+            };
+
+            const submitQuestion = async (question) => {
+                const cleanQuestion = question.trim();
+                if (!cleanQuestion || sendButton.disabled) return;
+
+                welcomeState.hidden = true;
+                makeMessage("user", cleanQuestion);
+                input.value = "";
+                resizeComposer();
+                setBusy(true);
+
+                try {
+                    const response = await fetch("/get", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8" },
+                        body: new URLSearchParams({ msg: cleanQuestion })
+                    });
+
+                    if (!response.ok) throw new Error(`Request failed with status ${response.status}`);
+                    const answer = (await response.text()).trim();
+                    typingIndicator.hidden = true;
+                    await revealAssistantMessage(answer || "I couldn't find a clear answer in the medical reference.");
+                } catch (error) {
+                    makeMessage(
+                        "assistant",
+                        "I’m having trouble reaching the medical knowledge service right now. Please try your question again in a moment.",
+                        true
+                    );
+                } finally {
+                    setBusy(false);
+                    input.focus();
+                }
+            };
+
+            form.addEventListener("submit", (event) => {
+                event.preventDefault();
+                submitQuestion(input.value);
+            });
+
+            input.addEventListener("input", resizeComposer);
+            input.addEventListener("keydown", (event) => {
+                if (event.key === "Enter" && !event.shiftKey) {
+                    event.preventDefault();
+                    form.requestSubmit();
+                }
+            });
+
+            suggestionButtons.forEach((button) => {
+                button.addEventListener("click", () => submitQuestion(button.dataset.prompt || ""));
+            });
+
+            newChatButton.addEventListener("click", () => {
+                messages.querySelectorAll(".message").forEach((message) => message.remove());
+                setBusy(false);
+                welcomeState.hidden = false;
+                input.value = "";
+                resizeComposer();
+                messages.scrollTo({ top: 0, behavior: reduceMotion.matches ? "auto" : "smooth" });
+                input.focus();
+            });
+
+            const updateMotionControl = () => {
+                const paused = video.paused;
+                motionIcon.textContent = paused ? "▶" : "Ⅱ";
+                motionLabel.textContent = paused ? "Play motion" : "Pause motion";
+                motionToggle.setAttribute("aria-label", paused ? "Play background motion" : "Pause background motion");
+                document.body.classList.toggle("motion-paused", paused);
+            };
+
+            motionToggle.addEventListener("click", async () => {
+                if (video.paused) {
+                    try { await video.play(); } catch (error) { /* The still frame remains as a safe fallback. */ }
+                } else {
+                    video.pause();
+                }
+                updateMotionControl();
+            });
+
+            if (reduceMotion.matches) video.pause();
+            reduceMotion.addEventListener("change", (event) => {
+                if (event.matches) video.pause();
+                updateMotionControl();
+            });
+            video.addEventListener("play", updateMotionControl);
+            video.addEventListener("pause", updateMotionControl);
+
+            resizeComposer();
+            updateMotionControl();
+        })();
+    </script>
+</body>
+</html>
